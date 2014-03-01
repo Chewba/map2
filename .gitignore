@@ -8,6 +8,8 @@
 bin/
 tmp/
 node_modules/
+*.zip
+*.csv
 *.tmp
 *.bak
 *.swp
@@ -16,6 +18,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+zipsMassage.js
 
 # External tool builders
 .externalToolBuilders/
