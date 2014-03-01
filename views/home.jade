@@ -1,0 +1,36 @@
+extends layout
+
+block content
+ section(ng-controller='mapCtrl')
+  section(id="address" class="row")
+   section(class="address row col-md-10 col-md-offset-1")
+    h3 Search an address for the average incomes around it.
+    form(action="" ng-submit=("getAddr(address)"))
+     div(class="input-group input-group-lg col-md-12")
+      input(class="form-control" type="text" name="address" ng-model="address" onfocus="this.select();" onmouseup="return false;" placeholder="address or zip code to search on.")
+    div(class="dropdown theme-dropdown" ng-class="{'open' : openDropdown()}" )
+     ul(class="dropdown-menu" role="menu" aria-labelledby="addressSelect")
+      li(role="presentation" ng-repeat="addr in addresses" class="list-group-item")
+       span(class="" ng-click=("setAddress(addr)") ng-class="{'active' : isActiveAddress(addr.address)}") {{addr.address}}, {{addr.location}}
+    section(class="panel panel-success map" ng-class="{'hidden' : !gotAddress()}")
+     section(class="panel-heading")
+      h3(class="panel-title") {{address}}
+     section(class="panel-body")
+      ul(class="nav nav-tabs" id="myTabs")
+       li(ng-class="{'active': selected === 'map'}" ng-click="selected = 'map'") Map
+       li(ng-class="{'active': selected === 'grid'}" ng-click="selected = 'grid'") Grid
+      section(id='content' class='tab-content')
+       section(class='tab-pane' ng-class="{'active': selected === 'map'}" id="map")
+        map(id="map_canvas")
+       section(class='tab-pane' ng-class="{'active': selected == 'grid'}" id="grid")
+        table(class='col-md-12')
+         tr(class='row')
+          th(class='col-md-1 col-md-offset-1') Zip
+          th(class='col-md-4') City
+          th(class='col-md-1') State
+          th(class='col-md-4') Average Wages/Capita
+         tr(class='row' ng-class-odd="'odd'" ng-repeat="zipData in zipsData")
+          td(class='col-md-1 col-md-offset-1') {{zipData._id}}
+          td(class='col-md-4') {{zipData.city}}
+          td(class='col-md-1') {{zipData.state}}
+          td(class='col-md-4') {{zipData.avg_wages}}
